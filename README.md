@@ -4,10 +4,9 @@
 
 <p align="center">
   <a href="https://github.com/Robert-GeorgeDev/ValidRO/actions/workflows/ci.yml"><img src="https://github.com/Robert-GeorgeDev/ValidRO/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://www.npmjs.com/package/validro"><img src="https://img.shields.io/npm/v/validro" alt="npm version"></a>
-  <a href="https://bundlephobia.com/package/validro"><img src="https://img.shields.io/bundlephobia/minzip/validro" alt="bundle size"></a>
-  <img src="https://img.shields.io/badge/dependencies-0-1D6B45" alt="zero dependencies">
-  <a href="LICENSE"><img src="https://img.shields.io/npm/l/validro" alt="MIT license"></a>
+  <a href="https://robert-georgedev.github.io/ValidRO/"><img src="https://img.shields.io/badge/demo-online-2747C4" alt="Demo online"></a>
+  <img src="https://img.shields.io/badge/dependencies-0-1D6B45" alt="Zero dependencies">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-4A5873" alt="MIT license"></a>
 </p>
 
 <p align="center">
