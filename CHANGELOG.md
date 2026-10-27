@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- `validatePostalCode` / `isValidPostalCode` for six-digit Romanian postal code format validation
+
 ## [0.1.0] - 2026-10-27
 
 ### Added

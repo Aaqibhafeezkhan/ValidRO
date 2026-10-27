@@ -4,5 +4,7 @@ export { validateCui, isValidCui, cuiControlDigit } from "./cui.js";
 export type { CuiInfo } from "./cui.js";
 export { validateIbanRo, isValidIbanRo, ibanChecksumOk } from "./iban.js";
 export type { IbanInfo } from "./iban.js";
+export { validatePostalCode, isValidPostalCode } from "./postal-code.js";
+export type { PostalCodeInfo } from "./postal-code.js";
 export { CNP_COUNTIES } from "./counties.js";
 export type { ValidationResult } from "./result.js";

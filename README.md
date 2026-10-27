@@ -14,7 +14,7 @@
   <a href="https://robert-georgedev.github.io/ValidRO/"><strong>Try it in your browser</strong></a>
 </p>
 
-Validate and decode Romanian identifiers (**CNP**, **CUI/CIF** and **IBAN**) with error messages you can show directly to users. Zero dependencies, fully typed, runs in Node and in the browser.
+Validate and decode Romanian identifiers (**CNP**, **CUI/CIF**, **IBAN** and postal codes) with error messages you can show directly to users. Zero dependencies, fully typed, runs in Node and in the browser.
 
 ```bash
 npm install validro
@@ -60,7 +60,7 @@ type ValidationResult<T> =
   | { valid: false; error: string; data: null };
 ```
 
-Only need true or false? Use `isValidCnp`, `isValidCui` and `isValidIbanRo`.
+Only need true or false? Use `isValidCnp`, `isValidCui`, `isValidIbanRo` and `isValidPostalCode`.
 
 ## API
 
@@ -69,7 +69,8 @@ Only need true or false? Use `isValidCnp`, `isValidCui` and `isValidIbanRo`.
 | `validateCnp(cnp, now?)` | `ValidationResult<CnpInfo>`; `now` sets the date used to reject future birth dates |
 | `validateCui(cui)` | `ValidationResult<CuiInfo>` |
 | `validateIbanRo(iban)` | `ValidationResult<IbanInfo>` |
-| `isValidCnp`, `isValidCui`, `isValidIbanRo` | `boolean` |
+| `validatePostalCode(postalCode)` | `ValidationResult<PostalCodeInfo>`; exactly 6 digits |
+| `isValidCnp`, `isValidCui`, `isValidIbanRo`, `isValidPostalCode` | `boolean` |
 | `cnpControlDigit(first12)` | the CNP control digit |
 | `cuiControlDigit(body)` | the CUI control digit |
 | `ibanChecksumOk(iban)` | mod-97 check, works for any country |
@@ -109,3 +110,5 @@ Ideas and bugs are welcome in [issues](https://github.com/Robert-GeorgeDev/Valid
 ## License
 
 [MIT](LICENSE)
+
+
