@@ -83,6 +83,7 @@ Only need true or false? Use `isValidCnp`, `isValidCui`, `isValidIbanRo` and `is
 | CNP | 13 digits, sex and century digit, real calendar date including leap years, not in the future, county code (01–52, 70), sequence not 000, control digit (key `279146358279`) |
 | CUI / CIF | optional `RO` prefix, 2–10 digits, no leading zero, control digit (key `753217532`) |
 | IBAN (RO) | 24 characters: `RO`, 2 check digits, 4-letter bank code, 16 alphanumerics, ISO 13616 mod-97 |
+| Postal code | exactly 6 digits |
 
 Spaces, dots and dashes in the input are ignored.
 
@@ -102,7 +103,7 @@ All examples in this repository are fictitious: sample CNPs use birth dates in t
 
 - [ ] Romanian licence plates
 - [ ] Phone numbers, normalized to `+40`
-- [ ] Postal codes
+- [x] Postal codes
 - [ ] Python port
 
 Ideas and bugs are welcome in [issues](https://github.com/Robert-GeorgeDev/ValidRO/issues). See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
@@ -110,5 +111,3 @@ Ideas and bugs are welcome in [issues](https://github.com/Robert-GeorgeDev/Valid
 ## License
 
 [MIT](LICENSE)
-
-
