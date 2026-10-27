@@ -17,8 +17,10 @@
 Validate and decode Romanian identifiers (**CNP**, **CUI/CIF**, **IBAN** and postal codes) with error messages you can show directly to users. Zero dependencies, fully typed, runs in Node and in the browser.
 
 ```bash
-npm install validro
+npm install github:Robert-GeorgeDev/ValidRO
 ```
+
+The package is not on the npm registry yet; this installs it straight from GitHub and builds it.
 
 ## Why ValidRO
 
