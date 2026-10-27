@@ -9,6 +9,7 @@
 <meta property="og:title" content="ValidRO · verifică CNP, CUI și IBAN">
 <meta property="og:description" content="Vezi ce înseamnă fiecare cifră și cum se calculează cifra de control. Local, fără server.">
 <meta property="og:url" content="https://robert-georgedev.github.io/ValidRO/">
+<link rel="canonical" href="https://robert-georgedev.github.io/ValidRO/">
 <meta property="og:image" content="https://robert-georgedev.github.io/ValidRO/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#EDF1F6" media="(prefers-color-scheme: light)">
@@ -77,6 +78,7 @@
   .kinds button:hover { color: var(--ink); }
   .kinds button[aria-selected="true"] { background: var(--stamp); color: var(--sheet); }
   .kinds button:focus-visible { outline-offset: -3px; }
+  .narrow-only { display: none; }
 
   .field-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }
   .field-head label { font-size: 0.95rem; color: var(--ink-2); }
@@ -185,6 +187,9 @@
     .tool { padding: 18px 14px; }
     .kinds { display: flex; }
     .kinds button { flex: 1; padding: 10px 0; }
+    .kinds button { white-space: nowrap; }
+    .wide-only { display: none; }
+    .narrow-only { display: inline; }
     input#code { font-size: 1.25rem; padding-right: 48px; }
     .result { grid-template-columns: 1fr; }
     .stamp { width: 72px; height: 72px; justify-self: end; margin-top: -8px; }
@@ -219,13 +224,14 @@
     </a>
   </header>
 
-  <p class="lede">Verifică un CNP, un CUI sau un IBAN, vezi ce înseamnă fiecare cifră și cum se calculează cifra de control.</p>
+  <p class="lede">Verifică un CNP, un CUI, un IBAN sau un cod poștal, vezi ce înseamnă fiecare cifră și cum se calculează cifra de control.</p>
 
   <section class="tool" aria-label="Verificare">
     <div class="kinds" role="tablist" aria-label="Ce verifici">
       <button role="tab" id="tab-cnp" aria-selected="true" aria-controls="panel" data-kind="cnp">CNP</button>
       <button role="tab" id="tab-cui" aria-selected="false" aria-controls="panel" data-kind="cui" tabindex="-1">CUI</button>
       <button role="tab" id="tab-iban" aria-selected="false" aria-controls="panel" data-kind="iban" tabindex="-1">IBAN</button>
+      <button role="tab" id="tab-postal" aria-selected="false" aria-controls="panel" data-kind="postal" tabindex="-1" aria-label="Cod poștal"><span class="wide-only">Cod poștal</span><span class="narrow-only" aria-hidden="true">Poștal</span></button>
     </div>
 
     <div id="panel" role="tabpanel" aria-labelledby="tab-cnp">
@@ -281,6 +287,7 @@ validateCnp("3000101221148");
       <li><strong>CNP:</strong> dată reală (inclusiv ani bisecți), cod de județ, inclusiv codul 70 folosit pentru CNP-urile noi, cifra de control.</li>
       <li><strong>CUI / CIF:</strong> cu sau fără prefixul RO, cifra de control.</li>
       <li><strong>IBAN:</strong> structura românească de 24 de caractere și verificarea mod 97.</li>
+      <li><strong>Cod poștal:</strong> exact 6 cifre.</li>
     </ul>
     <p>Un cod valid e corect ca formă; asta nu înseamnă că aparține cuiva. Exemplele de pe pagină sunt fictive.</p>
   </section>
@@ -292,7 +299,7 @@ validateCnp("3000101221148");
 </main>
 
 <script type="module">
-  import { validateCnp, validateCui, validateIbanRo } from "./lib/index.js";
+  import { validateCnp, validateCui, validateIbanRo, validatePostalCode } from "./lib/index.js";
 
   const REPO = "Robert-GeorgeDev/ValidRO";
   const MONTHS = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie",
@@ -301,7 +308,7 @@ validateCnp("3000101221148");
     1: "bărbat, 1900–1999", 2: "femeie, 1900–1999", 3: "bărbat, 1800–1899", 4: "femeie, 1800–1899",
     5: "bărbat, 2000–2099", 6: "femeie, 2000–2099", 7: "rezident străin", 8: "rezidentă străină", 9: "cetățean străin",
   };
-  const NAMES = { cnp: "CNP", cui: "CUI", iban: "IBAN" };
+  const NAMES = { cnp: "CNP", cui: "CUI", iban: "IBAN", postal: "Cod poștal" };
 
   /* Weighted-sum explanation shared by CNP and CUI */
   function weightedTable(digits, key, products) {
@@ -439,6 +446,21 @@ validateCnp("3000101221148");
           </ol>`;
       },
     },
+    postal: {
+      label: "Codul poștal",
+      placeholder: "6 cifre, de ex. 010101",
+      inputmode: "numeric",
+      examples: [["010101", "valid"], ["01010", "prea scurt"]],
+      clean: (v) => v.replace(/\D/g, "").slice(0, 6),
+      total: 6,
+      complete: (v) => v.length === 6,
+      validate: validatePostalCode,
+      segments(v, r) {
+        return [{ text: v, size: 6, name: "cod poștal", meaning: r?.valid ? "format corect" : undefined }];
+      },
+      badSegments: () => [0],
+      math: () => null,
+    },
   };
 
   const $ = (id) => document.getElementById(id);
@@ -452,6 +474,7 @@ validateCnp("3000101221148");
     const v = raw.toUpperCase().replace(/[\s.\-]/g, "");
     if (/^RO\d{2}[A-Z]{4}/.test(v)) return "iban";
     if (/^\d{13}$/.test(v)) return "cnp";
+    if (/^\d{6}$/.test(v) && kind === "postal") return "postal";
     if (/^(RO)?\d{2,10}$/.test(v)) return "cui";
     return null;
   }
