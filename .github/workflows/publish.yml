@@ -11,6 +11,8 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -18,6 +20,11 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
       - run: npm install
-      - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm run typecheck && npm test
+      # Until an NPM_TOKEN secret is added, tags only create a GitHub release.
+      - name: Skip npm publish (no NPM_TOKEN secret yet)
+        if: env.NODE_AUTH_TOKEN == ''
+        run: echo "::notice::NPM_TOKEN is not set, so this release was not published to npm."
+      - name: Publish
+        if: env.NODE_AUTH_TOKEN != ''
+        run: npm publish --provenance --access public

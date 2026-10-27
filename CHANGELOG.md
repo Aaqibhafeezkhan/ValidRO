@@ -4,10 +4,6 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
-### Added
-
-- `validatePostalCode` / `isValidPostalCode` for six-digit Romanian postal code format validation
-
 ## [0.1.0] - 2026-10-27
 
 ### Added
@@ -16,4 +12,8 @@ All notable changes to this project are documented here. The format follows [Kee
 - `validateCui` / `isValidCui`, with or without the `RO` prefix
 - `validateIbanRo` / `isValidIbanRo`, with formatting and bank code
 - Control-digit helpers: `cnpControlDigit`, `cuiControlDigit`, `ibanChecksumOk`
-- Demo page that splits a code into its parts and explains each one
+- `validatePostalCode` / `isValidPostalCode` for six-digit Romanian postal codes (thanks @jay23606, #12)
+- Demo page that splits a code into its parts, explains each one and shows how the check digit is computed
+
+[Unreleased]: https://github.com/Robert-GeorgeDev/ValidRO/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Robert-GeorgeDev/ValidRO/releases/tag/v0.1.0
